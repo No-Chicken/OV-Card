@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "usergui.h": "c",
+        "rc522.h": "c"
+    }
+}
