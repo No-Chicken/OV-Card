@@ -108,8 +108,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	
 	key_port_init();	
-
-	RC522_ERRO = RC522_Init();
+	
+	RC522_Port_Init();
 	RC522_PowerOff();
 	
 	if(!EEPROM_Read_W_CHECK(0x00,read_buf,2))
@@ -148,7 +148,7 @@ int main(void)
 			}
 		}
 	}
-	
+	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -165,40 +165,28 @@ int main(void)
 		if(key == 1)
 		{
 			data_addr -= 0x10;//data_addr --, change to previous UID
-			if(data_addr>=0x10)
+			if(data_addr<0x10)
+				data_addr = 0x10*ID_NUM;
+			HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
+			if(!EEPROM_ERRO)
 			{
-				HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
-				HAL_Delay(300);
-				HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_RESET);
-				HAL_Delay(300);
-				if(!EEPROM_ERRO)
-				{
-					EEPROM_Write_W_CHECK(DATA_ADDR_ADDR,&data_addr,1);
-				}
-				cuid_flag = 1;
-				epd_flag = 1;
+				EEPROM_Write_W_CHECK(DATA_ADDR_ADDR,&data_addr,1);
 			}
-			else
-			{data_addr = 0x10;}
+			cuid_flag = 1;
+			epd_flag = 1;
 		}
 		else if(key == 2)
 		{
 			data_addr += 0x10;//data_addr add, change to next UID
-			if(data_addr<=(0x10*ID_NUM))
+			if(data_addr>(0x10*ID_NUM))
+				data_addr = 0x10;
+			HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
+			if(!EEPROM_ERRO)
 			{
-				HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
-				HAL_Delay(300);
-				HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_RESET);
-				HAL_Delay(300);
-				if(!EEPROM_ERRO)
-				{
-					EEPROM_Write_W_CHECK(DATA_ADDR_ADDR,&data_addr,1);
-				}
-				cuid_flag = 1;
-				epd_flag = 1;
+				EEPROM_Write_W_CHECK(DATA_ADDR_ADDR,&data_addr,1);
 			}
-			else
-			{data_addr = 0x10*ID_NUM;}
+			cuid_flag = 1;
+			epd_flag = 1;
 		}
 		/******************************************/
 		
@@ -206,7 +194,6 @@ int main(void)
 		/*********check the CUID card is selected or not************/
 		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_8))//the UID card is selected
 		{
-			HAL_Delay(10);
 			if(cuid_flag)
 			{
 				RC522_ERRO = RC522_Init();
@@ -232,17 +219,10 @@ int main(void)
 									status = PcdWrite((snr*4+0), read_buf);  
 									if(!status)
 									{
-										//HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
+										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
 										cuid_flag = 0;
 										//WaitCardOff();
-										/*
-										HAL_Delay(500);
 										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_RESET);
-										HAL_Delay(500);
-										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
-										HAL_Delay(500);
-										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_RESET);
-										*/
 										RC522_PowerOff();
 									}
 								}
@@ -256,7 +236,6 @@ int main(void)
 		else	//the UID card is disabled
 		{
 			/***********search the card***************/
-			HAL_Delay(10);
 			if(cuid_flag)
 			{
 				RC522_ERRO = RC522_Init();
@@ -278,7 +257,7 @@ int main(void)
 									if(!status)
 									{
 										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
-										WaitCardOff();
+										//WaitCardOff();
 										if(!EEPROM_ERRO)
 										{
 											EEPROM_Write_W_CHECK(data_addr,read_buf,16);
@@ -309,9 +288,9 @@ int main(void)
 
 			EPD_1IN54_V2_Display((uint8_t*)gImage_MainPic);
 
-			EPD_1IN54_V2_Init_Partial();
+			//EPD_1IN54_V2_Init_Partial();
 			User_EPD_Display_Part((uint8_t*)gImage_PointerPic,145,155+32-1-temp,145+24-1,155-temp);
-
+			
 			EPD_1IN54_V2_Sleep();
 			DEV_Module_Exit();
 			epd_flag = 0;
@@ -341,10 +320,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLLMUL_3;
-  RCC_OscInitStruct.PLL.PLLDIV = RCC_PLLDIV_2;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -354,12 +330,12 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV2;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
   {
     Error_Handler();
   }

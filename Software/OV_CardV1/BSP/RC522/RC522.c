@@ -86,6 +86,25 @@ void RC522_PowerOff(void)
     //HAL_Delay(100);
 }
 
+
+/**************************************************************************/
+/*!
+    @brief  RC522 PORT INIT
+
+    @param  NULL			
+
+	@returns NULL
+*/
+/**************************************************************************/
+void RC522_Port_Init(void)
+{
+	//GPIO initialize
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+	SPI_GpioInit(&RC522_dev);
+	__HAL_RCC_GPIOA_CLK_ENABLE();
+	RST_Pin_Init();
+}
+
 /**************************************************************************/
 /*!
     @brief  initialize the RC522
@@ -98,11 +117,8 @@ void RC522_PowerOff(void)
 uint8_t RC522_Init(void)
 {
 	uint8_t check_num = 5;
-	//GPIO initialize
-	__HAL_RCC_GPIOB_CLK_ENABLE();
-	SPI_GpioInit(&RC522_dev);
-	__HAL_RCC_GPIOA_CLK_ENABLE();
-	RST_Pin_Init();
+	//GPIO INIT
+	RC522_Port_Init();
 	
 	//RC522 reset
 	RST_H;

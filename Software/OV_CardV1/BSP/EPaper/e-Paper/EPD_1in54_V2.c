@@ -135,7 +135,7 @@ static void EPD_1IN54_V2_ReadBusy(void)
 function :	Turn On Display full
 parameter:
 ******************************************************************************/
-static void EPD_1IN54_V2_TurnOnDisplay(void)
+void EPD_1IN54_V2_TurnOnDisplay(void)
 {
     EPD_1IN54_V2_SendCommand(0x22);
     EPD_1IN54_V2_SendData(0xc7);

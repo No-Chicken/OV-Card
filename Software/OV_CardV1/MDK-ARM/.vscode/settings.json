@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "usergui.h": "c",
-        "rc522.h": "c"
+        "rc522.h": "c",
+        "epd_1in54_v2.h": "c"
     }
 }

@@ -44,7 +44,6 @@ void EPD_1IN54_V2_DisplayPartBaseImage(UBYTE *Image);
 void EPD_1IN54_V2_DisplayPart(UBYTE *Image);
 void EPD_1IN54_V2_Sleep(void);
 
-void EPD_1IN54_V2_TurnOnDisplayPart();
 void User_EPD_Display_Part(UBYTE *Image, uint16_t xstart, uint16_t ystart, uint16_t xend, uint16_t yend);
 void User_EPD_Clear_Part(uint8_t color, uint16_t xstart, uint16_t ystart, uint16_t xend, uint16_t yend);
 #endif

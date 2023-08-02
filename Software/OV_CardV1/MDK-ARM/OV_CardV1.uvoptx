@@ -154,30 +154,6 @@
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
-      <WatchWindow1>
-        <Ww>
-          <count>0</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>test1</ItemText>
-        </Ww>
-        <Ww>
-          <count>1</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>test2</ItemText>
-        </Ww>
-        <Ww>
-          <count>2</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>temp</ItemText>
-        </Ww>
-      </WatchWindow1>
-      <WatchWindow2>
-        <Ww>
-          <count>0</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>test2</ItemText>
-        </Ww>
-      </WatchWindow2>
       <MemoryWindow1>
         <Mm>
           <WinNumber>1</WinNumber>
@@ -339,8 +315,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\BSP\Soft_SPI\Soft_SPI.c</PathWithFileName>
-      <FilenameWithoutPath>Soft_SPI.c</FilenameWithoutPath>
+      <PathWithFileName>..\BSP\EEPROM\EEPROM.c</PathWithFileName>
+      <FilenameWithoutPath>EEPROM.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -363,8 +339,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\BSP\EEPROM\EEPROM.c</PathWithFileName>
-      <FilenameWithoutPath>EEPROM.c</FilenameWithoutPath>
+      <PathWithFileName>..\BSP\RC522\RC522.c</PathWithFileName>
+      <FilenameWithoutPath>RC522.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -375,8 +351,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\BSP\RC522\RC522.c</PathWithFileName>
-      <FilenameWithoutPath>RC522.c</FilenameWithoutPath>
+      <PathWithFileName>..\BSP\Soft_SPI\Soft_SPI.c</PathWithFileName>
+      <FilenameWithoutPath>Soft_SPI.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -395,8 +371,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\BSP\EPaper\Config\DEV_Config.c</PathWithFileName>
-      <FilenameWithoutPath>DEV_Config.c</FilenameWithoutPath>
+      <PathWithFileName>..\BSP\EPaper\UserGUI.c</PathWithFileName>
+      <FilenameWithoutPath>UserGUI.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -419,8 +395,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\BSP\EPaper\UserGUI.c</PathWithFileName>
-      <FilenameWithoutPath>UserGUI.c</FilenameWithoutPath>
+      <PathWithFileName>..\BSP\EPaper\Config\DEV_Config.c</PathWithFileName>
+      <FilenameWithoutPath>DEV_Config.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

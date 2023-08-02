@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L051xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L0xx/Include;../Drivers/CMSIS/Include;..\BSP\KEY;..\BSP\EEPROM;..\BSP\RC522;..\BSP\Soft_SPI;..\BSP\EPaper\Config;..\BSP\EPaper\e-Paper;..\BSP\EPaper</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L0xx/Include;../Drivers/CMSIS/Include;..\BSP\EEPROM;..\BSP\KEY;..\BSP\RC522;..\BSP\Soft_SPI;..\BSP\EPaper\Config;..\BSP\EPaper\e-Paper;..\BSP\EPaper</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -425,9 +425,9 @@
           <GroupName>Application/User/BSP</GroupName>
           <Files>
             <File>
-              <FileName>Soft_SPI.c</FileName>
+              <FileName>EEPROM.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\BSP\Soft_SPI\Soft_SPI.c</FilePath>
+              <FilePath>..\BSP\EEPROM\EEPROM.c</FilePath>
             </File>
             <File>
               <FileName>key.c</FileName>
@@ -435,14 +435,14 @@
               <FilePath>..\BSP\KEY\key.c</FilePath>
             </File>
             <File>
-              <FileName>EEPROM.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\EEPROM\EEPROM.c</FilePath>
-            </File>
-            <File>
               <FileName>RC522.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\RC522\RC522.c</FilePath>
+            </File>
+            <File>
+              <FileName>Soft_SPI.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\Soft_SPI\Soft_SPI.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -450,9 +450,9 @@
           <GroupName>Application/User/EPaper</GroupName>
           <Files>
             <File>
-              <FileName>DEV_Config.c</FileName>
+              <FileName>UserGUI.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\BSP\EPaper\Config\DEV_Config.c</FilePath>
+              <FilePath>..\BSP\EPaper\UserGUI.c</FilePath>
             </File>
             <File>
               <FileName>EPD_1in54_V2.c</FileName>
@@ -460,9 +460,9 @@
               <FilePath>..\BSP\EPaper\e-Paper\EPD_1in54_V2.c</FilePath>
             </File>
             <File>
-              <FileName>UserGUI.c</FileName>
+              <FileName>DEV_Config.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\BSP\EPaper\UserGUI.c</FilePath>
+              <FilePath>..\BSP\EPaper\Config\DEV_Config.c</FilePath>
             </File>
           </Files>
         </Group>
