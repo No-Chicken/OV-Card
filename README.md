@@ -14,11 +14,9 @@ https://space.bilibili.com/34154740
 
 系统的硬件总体框图如下图所示
 
-<img src=".\images\系统框图.png" alt="系统框图" style="zoom:100%;" />
+<img src=".\images\系统框图.png" alt="系统框图" style="zoom:100%;" div align = "center" />
 
-主控: STM32L051K8U6，供电: TPS63020，显示：1.54寸200*200墨水屏
-
-如果不想买墨水屏，或者想要用超级久，可以使用超低功耗版本，只用LED进行显示。关于卡片信息存储，全部存储在MCU内部的EEPROM里。
+主控: STM32L051K8U6，供电: TPS63020，显示：1.54寸200*200墨水屏。如果不想买墨水屏，或者想要用超级久，可以使用超低功耗版本，只用LED进行显示。关于卡片信息存储，全部存储在MCU内部的EEPROM里。
 
 
 
@@ -40,13 +38,13 @@ https://space.bilibili.com/34154740
 
 ②滑到右边是卡模拟模式，上电后，即将信息写入了IC卡中。只要保持滑动开关在右边，断电后仍然可以刷卡，即被外部读卡器读。
 
-<img src=".\images\操作图.jpg" alt="操作图" style="zoom:100%;" />
+<img src=".\images\操作图.jpg" alt="操作图" style="zoom:100%;" div align = "center" />
 
 ## 原理说明
 
 功能框图，IC卡信息分区图如下所示。NFC模块通过RC522读取外部IC卡的卡号，即0扇区0区块的数据，然后存储至STM32L051内部的EEPROM中。滑动开关控制内部UID卡的线圈的开合，即加入了使能功能，通过NFC模块，将存储在EEPROM的卡号信息写入UID卡中，即实现了卡片复制功能。
 
-<img src=".\images\功能框图.png" alt="功能框图" style="zoom:100%;" />
+<img src=".\images\功能框图.png" alt="功能框图" style="zoom:100%;" div align = "center" />
 
-<img src=".\images\IC卡扇区.png" alt="IC卡扇区" style="zoom:100%;" />
+<img src=".\images\IC卡扇区.png" alt="IC卡扇区" style="zoom:100%;" div align = "center" />
 
