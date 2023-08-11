@@ -32,10 +32,13 @@ ov_cardv1\main.o: ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_pwr_ex.h
 ov_cardv1\main.o: ../Drivers/STM32L0xx_HAL_Driver/Inc/stm32l0xx_hal_spi.h
 ov_cardv1\main.o: ../Core/Inc/spi.h
 ov_cardv1\main.o: ../Core/Inc/gpio.h
+ov_cardv1\main.o: D:\softwares\KEIL5MDK\ARM\ARMCC\Bin\..\include\stdlib.h
 ov_cardv1\main.o: ..\BSP\RC522\RC522.h
 ov_cardv1\main.o: ..\BSP\KEY\key.h
 ov_cardv1\main.o: ..\BSP\EEPROM\EEPROM.h
 ov_cardv1\main.o: ..\BSP\EPaper\e-Paper\EPD_1in54_V2.h
 ov_cardv1\main.o: ..\BSP\EPaper\Config\DEV_Config.h
 ov_cardv1\main.o: D:\softwares\KEIL5MDK\ARM\ARMCC\Bin\..\include\stdio.h
-ov_cardv1\main.o: ..\BSP\EPaper\UserGUI.h
+ov_cardv1\main.o: ..\BSP\EPaper\GUI\GUI_Paint.h
+ov_cardv1\main.o: ..\BSP\EPaper\GUI\../Fonts/fonts.h
+ov_cardv1\main.o: ..\BSP\EPaper\ImageData.h

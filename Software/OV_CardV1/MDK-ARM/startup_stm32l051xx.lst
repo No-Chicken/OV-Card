@@ -60,9 +60,9 @@ ARM Macro Assembler    Page 1
    39 00000400         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
    40 00000400         ; </h>
    41 00000400         
-   42 00000400 00000200 
+   42 00000400 00001400 
                        Heap_Size
-                               EQU              0x200
+                               EQU              0x1400
 
 
 
@@ -75,14 +75,14 @@ ARM Macro Assembler    Page 2
    45 00000000         __heap_base
    46 00000000         Heap_Mem
                                SPACE            Heap_Size
-   47 00000200         __heap_limit
-   48 00000200         
-   49 00000200                 PRESERVE8
-   50 00000200                 THUMB
-   51 00000200         
-   52 00000200         
-   53 00000200         ; Vector Table Mapped to Address 0 at Reset
-   54 00000200                 AREA             RESET, DATA, READONLY
+   47 00001400         __heap_limit
+   48 00001400         
+   49 00001400                 PRESERVE8
+   50 00001400                 THUMB
+   51 00001400         
+   52 00001400         
+   53 00001400         ; Vector Table Mapped to Address 0 at Reset
+   54 00001400                 AREA             RESET, DATA, READONLY
    55 00000000                 EXPORT           __Vectors
    56 00000000                 EXPORT           __Vectors_End
    57 00000000                 EXPORT           __Vectors_Size
@@ -409,7 +409,7 @@ Symbol: __heap_base
    Uses
       At line 217 in file startup_stm32l051xx.s
 Comment: __heap_base used once
-__heap_limit 00000200
+__heap_limit 00001400
 
 Symbol: __heap_limit
    Definitions
@@ -774,7 +774,7 @@ Symbol: WWDG_IRQHandler
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Absolute symbols
 
-Heap_Size 00000200
+Heap_Size 00001400
 
 Symbol: Heap_Size
    Definitions

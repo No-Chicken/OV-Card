@@ -340,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32L051xx</Define>
               <Undefine></Undefine>
-              <IncludePath>../Core/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L0xx/Include;../Drivers/CMSIS/Include;..\BSP\EEPROM;..\BSP\KEY;..\BSP\RC522;..\BSP\Soft_SPI;..\BSP\EPaper\Config;..\BSP\EPaper\e-Paper;..\BSP\EPaper</IncludePath>
+              <IncludePath>../Core/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc;../Drivers/STM32L0xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32L0xx/Include;../Drivers/CMSIS/Include;..\BSP\EEPROM;..\BSP\KEY;..\BSP\RC522;..\BSP\Soft_SPI;..\BSP\EPaper\Config;..\BSP\EPaper\e-Paper;..\BSP\EPaper\GUI;..\BSP\EPaper\Fonts;..\BSP\EPaper</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -450,11 +450,6 @@
           <GroupName>Application/User/EPaper</GroupName>
           <Files>
             <File>
-              <FileName>UserGUI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\BSP\EPaper\UserGUI.c</FilePath>
-            </File>
-            <File>
               <FileName>EPD_1in54_V2.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\EPaper\e-Paper\EPD_1in54_V2.c</FilePath>
@@ -463,6 +458,16 @@
               <FileName>DEV_Config.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\BSP\EPaper\Config\DEV_Config.c</FilePath>
+            </File>
+            <File>
+              <FileName>ImageData.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\EPaper\ImageData.c</FilePath>
+            </File>
+            <File>
+              <FileName>GUI_Paint.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\BSP\EPaper\GUI\GUI_Paint.c</FilePath>
             </File>
           </Files>
         </Group>

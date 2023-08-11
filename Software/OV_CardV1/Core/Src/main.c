@@ -23,11 +23,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdlib.h>
 #include "RC522.h"
 #include "key.h"
 #include "EEPROM.h"
 #include "EPD_1in54_V2.h"
-#include "UserGUI.h"
+#include "GUI_Paint.h"
+#include "ImageData.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -112,6 +114,19 @@ int main(void)
 	RC522_Port_Init();
 	RC522_PowerOff();
 	
+	
+	//Create a new image cache
+  UBYTE *BlackImage;
+  /* you have to edit the startup_stm32fxxx.s file and set a big enough heap size */
+  UWORD Imagesize = ((EPD_1IN54_V2_WIDTH % 8 == 0)? (EPD_1IN54_V2_WIDTH / 8 ): (EPD_1IN54_V2_WIDTH / 8 + 1)) * EPD_1IN54_V2_HEIGHT;
+	if((BlackImage = (UBYTE *)malloc(Imagesize)) == NULL) {
+        printf("Failed to apply for black memory...\r\n");
+    }
+	Paint_NewImage(BlackImage, EPD_1IN54_V2_WIDTH, EPD_1IN54_V2_HEIGHT, 270, WHITE);//creat a new image
+	Paint_SelectImage(BlackImage);//set the pointer
+  Paint_Clear(WHITE);
+  
+	
 	if(!EEPROM_Read_W_CHECK(0x00,read_buf,2))
 	{
 		if(read_buf[0] == 0x55 && read_buf[1] == 0xAA)
@@ -132,18 +147,19 @@ int main(void)
 				
 				uint8_t temp = data_addr>>4 & 0x0F;
 				temp = (temp-1)*50;
+				
+				Paint_DrawBitMap(gImage_MainPic);//put the image in ram
+				Paint_DrawBitMap_Paste(gImage_PointerPic,163-temp,145,24,32,0);
 
 				DEV_Module_Init();
 				EPD_1IN54_V2_Init();
-				EPD_1IN54_V2_Clear();
-				EPD_1IN54_V2_Display((uint8_t*)gImage_MainPic);
 
-				EPD_1IN54_V2_Init_Partial();
-				User_EPD_Display_Part((uint8_t*)gImage_PointerPic,145,155+32-1-temp,145+24-1,155-temp);
-				EPD_1IN54_V2_TurnOnDisplayPart();
-
-				EPD_1IN54_V2_Sleep();
-				DEV_Module_Exit();
+				EPD_1IN54_V2_Display(BlackImage);
+					
+				EPD_1IN54_V2_Sleep();//sleep
+				//free(BlackImage);//free
+				//BlackImage = NULL;//clear
+				DEV_Module_Exit();//exit
 				
 			}
 		}
@@ -189,6 +205,28 @@ int main(void)
 			epd_flag = 1;
 		}
 		/******************************************/
+		
+		
+		/*********check the ID Change and Display the pic***********/
+		if(epd_flag)
+		{
+			uint8_t temp = data_addr>>4 & 0x0F;
+			temp = (temp-1)*50;
+
+			Paint_DrawBitMap(gImage_MainPic);//put the image in ram
+      		Paint_DrawBitMap_Paste(gImage_PointerPic,163-temp,145,24,32,0);
+
+			DEV_Module_Init();
+			EPD_1IN54_V2_Init();
+
+      		EPD_1IN54_V2_Display(BlackImage);
+			
+			EPD_1IN54_V2_Sleep();
+			DEV_Module_Exit();
+			
+			epd_flag = 0;
+		}
+		/***********************************************************/
 		
 		
 		/*********check the CUID card is selected or not************/
@@ -274,26 +312,6 @@ int main(void)
 				}
 			}
 			/****************************************/
-		}
-		/***********************************************************/
-		
-		/*********check the ID Change and Display the pic***********/
-		if(epd_flag)
-		{
-			uint8_t temp = data_addr>>4 & 0x0F;
-			temp = (temp-1)*50;
-
-			DEV_Module_Init();
-			EPD_1IN54_V2_Init();
-
-			EPD_1IN54_V2_Display((uint8_t*)gImage_MainPic);
-
-			//EPD_1IN54_V2_Init_Partial();
-			User_EPD_Display_Part((uint8_t*)gImage_PointerPic,145,155+32-1-temp,145+24-1,155-temp);
-			
-			EPD_1IN54_V2_Sleep();
-			DEV_Module_Exit();
-			epd_flag = 0;
 		}
 		/***********************************************************/
 
