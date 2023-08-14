@@ -165,6 +165,93 @@ int main(void)
 		}
 	}
 	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
+
+	/*********check the CUID card is selected or not************/
+	if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_8))//the UID card is selected
+	{
+		if(cuid_flag)
+		{
+			RC522_ERRO = RC522_Init();
+			/*************write the cuid************/
+			status= PcdRequest(REQ_ALL,TagType);
+			if(!status)
+			{
+				status = PcdAnticoll(SelectedSnr);
+				if(!status)
+				{
+					status=PcdSelect(SelectedSnr);
+					if(!status)
+					{
+						snr = 0;  //sector 0
+						status = PcdAuthState(KEYA, (snr*4+3), DefaultKey, SelectedSnr);
+						{
+							if(!status)
+							{
+								if(!EEPROM_ERRO)
+								{
+									EEPROM_Read_W_CHECK(data_addr,read_buf,16);
+								}
+								status = PcdWrite((snr*4+0), read_buf);  
+								if(!status)
+								{
+									HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
+									cuid_flag = 0;
+									//WaitCardOff();
+									HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_RESET);
+									RC522_PowerOff();
+								}
+							}
+						}
+					}
+				}
+			}
+			/***************************************/
+		}
+	}
+	else	//the UID card is disabled
+	{
+		/***********search the card***************/
+		if(cuid_flag)
+		{
+			RC522_ERRO = RC522_Init();
+			status= PcdRequest(REQ_ALL,TagType);
+			if(!status)
+			{
+				status = PcdAnticoll(SelectedSnr);
+				if(!status)
+				{
+					status=PcdSelect(SelectedSnr);
+					if(!status)
+					{
+						snr = 0;  //sector 0
+						status = PcdAuthState(KEYA, (snr*4+3), DefaultKey, SelectedSnr);
+						{
+							if(!status)
+							{
+								status = PcdRead((snr*4+0), read_buf);  
+								if(!status)
+								{
+									HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
+									//WaitCardOff();
+									if(!EEPROM_ERRO)
+									{
+										EEPROM_Write_W_CHECK(data_addr,read_buf,16);
+									}
+									HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_RESET);
+									//return 0;
+									RC522_PowerOff();
+									cuid_flag = 0;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		/****************************************/
+	}
+	/***********************************************************/
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -188,7 +275,6 @@ int main(void)
 			{
 				EEPROM_Write_W_CHECK(DATA_ADDR_ADDR,&data_addr,1);
 			}
-			cuid_flag = 1;
 			epd_flag = 1;
 		}
 		else if(key == 2)
@@ -201,12 +287,10 @@ int main(void)
 			{
 				EEPROM_Write_W_CHECK(DATA_ADDR_ADDR,&data_addr,1);
 			}
-			cuid_flag = 1;
 			epd_flag = 1;
 		}
 		/******************************************/
-		
-		
+
 		/*********check the ID Change and Display the pic***********/
 		if(epd_flag)
 		{
@@ -225,93 +309,6 @@ int main(void)
 			DEV_Module_Exit();
 			
 			epd_flag = 0;
-		}
-		/***********************************************************/
-		
-		
-		/*********check the CUID card is selected or not************/
-		if(HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_8))//the UID card is selected
-		{
-			if(cuid_flag)
-			{
-				RC522_ERRO = RC522_Init();
-				/*************write the cuid************/
-				status= PcdRequest(REQ_ALL,TagType);
-				if(!status)
-				{
-					status = PcdAnticoll(SelectedSnr);
-					if(!status)
-					{
-						status=PcdSelect(SelectedSnr);
-						if(!status)
-						{
-							snr = 0;  //sector 0
-							status = PcdAuthState(KEYA, (snr*4+3), DefaultKey, SelectedSnr);
-							{
-								if(!status)
-								{
-									if(!EEPROM_ERRO)
-									{
-										EEPROM_Read_W_CHECK(data_addr,read_buf,16);
-									}
-									status = PcdWrite((snr*4+0), read_buf);  
-									if(!status)
-									{
-										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
-										cuid_flag = 0;
-										//WaitCardOff();
-										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_RESET);
-										RC522_PowerOff();
-									}
-								}
-							}
-						}
-					}
-				}
-				/***************************************/
-			}
-		}
-		else	//the UID card is disabled
-		{
-			/***********search the card***************/
-			if(cuid_flag)
-			{
-				RC522_ERRO = RC522_Init();
-				status= PcdRequest(REQ_ALL,TagType);
-				if(!status)
-				{
-					status = PcdAnticoll(SelectedSnr);
-					if(!status)
-					{
-						status=PcdSelect(SelectedSnr);
-						if(!status)
-						{
-							snr = 0;  //sector 0
-							status = PcdAuthState(KEYA, (snr*4+3), DefaultKey, SelectedSnr);
-							{
-								if(!status)
-								{
-									status = PcdRead((snr*4+0), read_buf);  
-									if(!status)
-									{
-										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
-										//WaitCardOff();
-										if(!EEPROM_ERRO)
-										{
-											EEPROM_Write_W_CHECK(data_addr,read_buf,16);
-										}
-										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_RESET);
-										//return 0;
-										RC522_PowerOff();
-										cuid_flag = 0;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			/****************************************/
 		}
 		/***********************************************************/
 
