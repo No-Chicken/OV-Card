@@ -118,7 +118,7 @@ int main(void)
 		}
 	}
 	
-	HAL_GPIO_WritePin(UID_Check_GPIO_Port,UID_Check_Pin,GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -164,7 +164,8 @@ int main(void)
 		
 		
 		/*********check the ID Change and turn the LED**************/
-		uint8_t temp = data_addr>>4 & 0x0F;
+		uint8_t temp = data_addr>>4 & 0x0f;
+		//temp = temp>>4 & 0x0F;
 		switch(temp)
 		{
 			case 1:
@@ -217,10 +218,10 @@ int main(void)
 									status = PcdWrite((snr*4+0), read_buf);  
 									if(!status)
 									{
-										HAL_GPIO_WritePin(UID_Check_GPIO_Port,UID_Check_Pin,GPIO_PIN_SET);
+										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
 										cuid_flag = 0;
 										//WaitCardOff();
-										HAL_GPIO_WritePin(UID_Check_GPIO_Port,UID_Check_Pin,GPIO_PIN_RESET);
+										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_RESET);
 										RC522_PowerOff();
 									}
 								}
@@ -254,13 +255,13 @@ int main(void)
 									status = PcdRead((snr*4+0), read_buf);  
 									if(!status)
 									{
-										HAL_GPIO_WritePin(UID_Check_GPIO_Port,UID_Check_Pin,GPIO_PIN_SET);
+										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_SET);
 										//WaitCardOff();
 										if(!EEPROM_ERRO)
 										{
 											EEPROM_Write_W_CHECK(data_addr,read_buf,16);
 										}
-										HAL_GPIO_WritePin(UID_Check_GPIO_Port,UID_Check_Pin,GPIO_PIN_RESET);
+										HAL_GPIO_WritePin(GPIOA,GPIO_PIN_15,GPIO_PIN_RESET);
 										//return 0;
 										RC522_PowerOff();
 										cuid_flag = 0;
