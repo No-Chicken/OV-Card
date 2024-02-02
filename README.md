@@ -54,10 +54,10 @@ https://space.bilibili.com/34154740
 <div align=center>
 <img src="./images/功能框图.png" alt="功能框图" style="zoom:100%;" />
 </div>
-
 <div align=center>
-<img src=".\images\IC卡扇区.png" alt="IC卡扇区" style="zoom:100%;" />
+<img src="./images/IC卡扇区.png" alt="IC卡扇区" style="zoom:100%;" />
 </div>
+
 
 
 ## 其他说明
